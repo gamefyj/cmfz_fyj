@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ChapterDao">
+    <select id="queryAllByPage" resultType="Chapter">
+        select chapter_id id,title,size,downPath,upload_time uploadTime ,album_id albumid from c_chapter where album_id=#{id} limit ${(page-1)*pageSize},#{pageSize}
+    </select>
+    <insert id="insert">
+        insert into c_chapter values(#{id},#{albumid},#{title},#{size},#{downPath},#{uploadTime})
+    </insert>
+    <delete id="delete">
+        delete from c_chapter where chapter_id=#{a}
+    </delete>
+    <update id="update">
+        update c_chapter set title=#{title},size=#{size},downPath=#{downPath},
+        upload_time=#{uploadTime}
+         where chapter_id=#{id}
+    </update>
+    <select resultType="int" id="selectCount">
+        select count(*) from c_chapter where album_id=#{albumid}
+     </select>
+    <update id="updateImgPath">
+        update  c_chapter set downPath=#{downPath} where chapter_id=#{id}
+    </update>
+</mapper>
+

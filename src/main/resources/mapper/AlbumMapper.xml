@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <select id="queryAllByPage" resultType="Album">
+        select album_id id,title,cover,count,score,author,broadcast,brief,publish_time publishTime from c_album order by id desc limit ${(page-1)*pageSize},#{pageSize}
+    </select>
+    <insert id="insert">
+        insert into c_album values(#{id},#{title},#{cover},#{count},#{score},#{author},#{broadcast},#{brief},#{publishTime})
+    </insert>
+    <delete id="delete">
+        delete from c_album where album_id=#{a}
+    </delete>
+    <update id="update">
+        update c_album
+        <set>
+            <if test="title!=null">title=#{title}</if>
+            <if test="cover!=null">,cover=#{cover}</if>
+            <if test="count!=null">,count=#{count}</if>
+            <if test="score!=null">,score=#{score}</if>
+            <if test="author!=null">,author=#{author}</if>
+            <if test="broadcast!=null"> ,broadcast=#{broadcast}</if>
+            <if test="brief!=null">,brief=#{brief}</if>
+            <if test="publishTime!=null">,publish_time=#{publishTime}</if>
+        </set>
+         where album_id=#{id}
+    </update>
+    <select resultType="int" id="selectCount">
+        select count(*) from c_album
+     </select>
+    <update id="updateImgPath">
+        update  c_album set cover=#{cover} where album_id=#{id}
+    </update>
+</mapper>
+
